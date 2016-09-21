@@ -35,7 +35,7 @@ The output of the above code is:
 
 #Basic usage
 
-To create a graph, you need to type.
+To create a graph, you need to type:
 ```c++
 Graph G(n);  //creates a graph with n vertices and no edges
 ```
@@ -45,7 +45,7 @@ G.addVertex();
 ```
 The vertices are numbered from 0 to n-1.
 
-To add edges, you can use the function
+To add edges, you can use the function:
 ```c++
 G.addEdges(u,v);//since the graph is undirected, G.addEdges(v,u); will do the same
 ```
@@ -56,7 +56,7 @@ If you want to find the subset of size k with the most betweenness centrality, y
 ```c++
 ValuedSubset Max = G.maxBtCt(k);
 ```
-This function will return an object of type ValuedSubset which contains k elements and the value of its betweenness centrality. You can print the subset with 
+This function will return an object of type ValuedSubset which contains k elements and the value of its betweenness centrality. You can print the subset with:
 ```c++
 Max.display(). 
 ```
