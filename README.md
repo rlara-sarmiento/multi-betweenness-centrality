@@ -56,9 +56,9 @@ If you want to find the subset of size k with the most betweenness centrality, y
 ```c++
 ValuedSubset Max = G.maxBtCt(k);
 ```
-This function will return an object of type ValuedSubset which contains k elements and the value of its betweenness centrality. You can print the subset with:
+This function will return an object of type ValuedSubset which contains k elements and the value of its betweenness centrality. You can print the subset using:
 ```c++
-Max.display(). 
+Max.display(); 
 ```
 To get the elements and the value of the subset, you can use:
 ```c++
