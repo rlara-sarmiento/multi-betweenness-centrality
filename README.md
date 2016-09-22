@@ -13,15 +13,20 @@ NOTE: To compile the code, you're going to need the discreture library: https://
 #Quick preview
 
 ```c++
+#include<iostream>
+#include "multibc.hpp"
+
+using namespace std;
+
 int main(){
-	Graph G(6);
-	for(int i=0;i<5;i++)
-		G.addEdge(i,i+1);
-		
-	ValuedSubset Max = G.maxBtCt(2);
-	Max.display();
-	
-	return 0;
+    Graph G(6);
+    for(int i=0;i<5;i++)
+        G.addEdge(i,i+1);
+
+    ValuedSubset Max = G.maxBtCt(2);
+    Max.display();
+
+    return 0;
 }
 
 ```
