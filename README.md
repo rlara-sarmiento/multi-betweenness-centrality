@@ -68,7 +68,7 @@ Max.display();
 To get the elements and the value of the subset, you can use:
 ```c++
 Max.getElements();//returns a vector containing the elements
-Max.getValue();//returns the its betweenness centrality
+Max.getValue();//returns a double, this value is its betweenness centrality
 ```
 
 
