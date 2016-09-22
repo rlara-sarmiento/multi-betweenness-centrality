@@ -71,6 +71,10 @@ Max.getElements();//returns a vector containing the elements
 Max.getValue();//returns a double, this value is its betweenness centrality
 ```
 
+#Contributors
+
+This is joint work with Miguel Raggi
+
 
 #Acknowledgements
 
