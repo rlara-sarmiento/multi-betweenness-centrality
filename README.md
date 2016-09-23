@@ -44,11 +44,8 @@ To create a graph, you need to type:
 ```c++
 Graph G(n);  //creates a graph with n vertices and no edges
 ```
-Of course, one can add new vertices.
-```c++
-G.addVertex();
-```
 The vertices are numbered from 0 to n-1.
+
 
 To add edges, you can use the function:
 ```c++
