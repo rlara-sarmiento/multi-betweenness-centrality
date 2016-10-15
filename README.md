@@ -23,7 +23,7 @@ int main(){
     for(int i=0;i<5;i++)
         G.addEdge(i,i+1);
 
-    ValuedSubset Max = G.maxBtCt(2);
+    ValuedSubset Max = G.maxBC(2);
     Max.display();
 
     return 0;
@@ -33,12 +33,12 @@ int main(){
 
 The output of the above code is:
 
-    {  2  4  }    its BtCt is   30
+    U = {  2  4  },     BC(U) = 30
 
 
 
 
-#Basic usage
+#Usage
 
 To create a graph, you need to type:
 ```c++
@@ -56,7 +56,7 @@ G.addEdges(u,v);//since the graph is undirected, G.addEdges(v,u); will do the sa
 
 If you want to find the subset of size k with the most betweenness centrality, you must use:
 ```c++
-ValuedSubset Max = G.maxBtCt(k);
+ValuedSubset Max = G.maxBC(k);
 ```
 This function will return an object of type ValuedSubset which contains k elements and the value of its betweenness centrality. You can print the subset using:
 ```c++
@@ -67,6 +67,16 @@ To get the elements and the value of the subset, you can use:
 Max.getElements();//returns a vector containing the elements
 Max.getValue();//returns a double, this value is its betweenness centrality
 ```
+
+Others functions are:
+```c++
+int numberOfVertices() 
+void setName(int v, string s)  // Define the name of the vertex v as s
+string getName(int v) // This function will return the vertex's name
+double BC( vector< int > &V) //Use this function to get BC(V)
+vector<int> getMaximumVertices(int m=1)  //This function returns the m-vertices with biggest betweenness centrality
+```
+
 
 #Contributors
 
