@@ -2,6 +2,7 @@
 #include<queue>
 #include<algorithm>
 #include<discreture.hpp>
+#include<string>
 
 
 
@@ -38,10 +39,10 @@ class ValuedSubset{
 		
 		
 		void display( ) const{
-			cout << "{  ";
+			cout << "U = {  ";
 			for( int x : elems )
 				cout << x << "  ";
-			cout << "}    its BtCt is   " << value << endl;
+			cout << "},     BC(U) = " << value << endl;
 		}
 		
 		
@@ -68,8 +69,9 @@ class Graph{
 		vector< vector< int > > D;
 		vector< vector< int > > W;
 		vector< int > SortedVertices;
+		vector< string > Names;
 		bool NotSortedVertices=true;
-		bool BtctNotCalculated=true;
+		bool BCNotCalculated=true;
 	
 	public:
 		
@@ -80,16 +82,24 @@ class Graph{
 			 BCs = vector< vector<double> > (n, vector<double> (n) );
 			 D = vector< vector< int > > (n, vector< int > (n, -1) );
 			 W = vector< vector< int > > (n, vector< int > (n) );
+			 Names = vector< string > (n);
 			 for(int i=0; i<n ; i++) SortedVertices.push_back(i);
 		}
 		
 		
+		inline void setName(int v, string name){
+		
+			Names[v] = name;
+		}
 		
 		
 		
-		inline void addVertex(){	G.push_back( vector<int> (0) );	}
+		inline string getName(int v){
 		
+			return Names[v];
+		}
 		
+	
 		
 		
 		inline int numberOfVertices() const{	return G.size();	}
@@ -135,10 +145,10 @@ class Graph{
 		
 		
 		
-		void calculateBtCt(){
+		void calculateBC(){
 			int n = numberOfVertices();
 			int lastnode, d, w;
-			BtctNotCalculated=false;
+			BCNotCalculated=false;
 			queue < int > q;
 			for(int s = 0; s < n ; ++s ){
 
@@ -202,7 +212,7 @@ class Graph{
 		
 		
 		
-		void BtCt_s(const vector< int > &U, const int &s , double& sum, vector< int >& V, long long paths, int pos){
+		void BC_s(const vector< int > &U, const int &s , double& sum, vector< int >& V, long long paths, int pos){
 			switch( V.size() ){
 				case 0:
 					break;
@@ -221,7 +231,7 @@ class Graph{
 			}
 			for( int i=pos ; i < U.size() ; i++){
 				V.push_back( U[i] );
-				BtCt_s( U, s, sum, V, paths, i+1);
+				BC_s( U, s, sum, V, paths, i+1);
 				V.pop_back( );
 			}	
 		}
@@ -230,22 +240,22 @@ class Graph{
 		
 		
 		
-		inline double BtCt(int v){
-			if( BtctNotCalculated )
-				calculateBtCt();
+		inline double BC(int v){
+			if( BCNotCalculated )
+				calculateBC();
 			return B[v];
 		}
 		
 		
 		
 		
-		double BtCt( vector< int > &U_0){
+		double BC( vector< int > &U_0){
 			vector< int > aux;
 			vector< int > U = U_0;
 			double sum = 0;
 			for( int s = 0; s < numberOfVertices() ; ++s){
 				sort( U.begin(), U.end(), [this,&s](int u, int v){  return D_s[u]<D_s[v]; });
-				BtCt_s( U, s, sum, aux , 0 , 0);	
+				BC_s( U, s, sum, aux , 0 , 0);	
 			}		
 			return sum;
 		}
@@ -255,7 +265,7 @@ class Graph{
 		
 		
 		
-		inline double sumBtCt( const vector< int >& U ){
+		inline double sumBC( const vector< int >& U ){
 			double sum = 0;
 			for( int x : U )
 				sum += B[  SortedVertices[x] ];
@@ -263,22 +273,34 @@ class Graph{
 		}
 
 		
+		vector<int> getMaximumVertices(int m=1){
+		
+			if( BCNotCalculated )
+				calculateBC();
+			if( NotSortedVertices ){
+				sort(SortedVertices.begin(), SortedVertices.end(), [this](int u, int v){  return B[u]>B[v]; });
+				NotSortedVertices = false;
+			}
+			vector<int> aux;
+			for(int i=0;i<m;i++)
+				aux.push_back(SortedVertices[i]);
+			return aux;
+		}
 		
 		
 		
-		
-		ValuedSubset maxBtCt(int k=1){
+		ValuedSubset maxBC(int k=1){
 			int cont=0;
 			
-			if( BtctNotCalculated )
-				calculateBtCt();
+			if( BCNotCalculated )
+				calculateBC();
 			if( NotSortedVertices ){
 				sort(SortedVertices.begin(), SortedVertices.end(), [this](int u, int v){  return B[u]>B[v]; });
 				NotSortedVertices = false;
 			}
 			
 			if( k == 1 ){
-				ValuedSubset max( {SortedVertices[0]}, BtCt( SortedVertices[0] ) );
+				ValuedSubset max( {SortedVertices[0]}, BC( SortedVertices[0] ) );
 				return max;
 			}
 			else{
@@ -286,8 +308,8 @@ class Graph{
 				double aux;
 				combinations Y( numberOfVertices(), k );
 				auto X = Y.find_all( [this, &max, &k](const vector< int > &comb) -> bool {
-					int sum = sumBtCt( comb );
-					if( sum + BtCt( SortedVertices[ comb.back( ) + 1 ] ) * ( k - comb.size() ) <= max.getValue( ) )
+					int sum = sumBC( comb );
+					if( sum + BC( SortedVertices[ comb.back( ) + 1 ] ) * ( k - comb.size() ) <= max.getValue( ) )
 						return false;
 					return true;
 				});
@@ -295,7 +317,7 @@ class Graph{
 					vector< int > U;
 					for(int x: T)
 						U.push_back( SortedVertices[x] ); 
-					aux = BtCt( U );
+					aux = BC( U );
 					if( aux > max.getValue() ){
 						ValuedSubset AUX(U,aux);
 						max = AUX;
@@ -306,8 +328,7 @@ class Graph{
 			}
 		}		
 		
-		
-		
+			
 			
 
 
