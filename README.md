@@ -1,16 +1,14 @@
 # Multi-betweenness-centrality
 
-THIS PROJECT IS STILL IN PROGRESS.
-
 There exists an algorithm to compute the betweenness centrality of every vertex of a graph. The generalization of betweenness centrality for subsets is obvious. Instead of counting the number of shortest paths from s to t that a vertex v lies on, we'll count the number of shortest paths from s to t such that have a non-empty intersection with a subset U.
 
-Here we provide an algorithm to find the subset of size k with the most betweenness centrality.
+Here we provide an algorithm to find the subset of size k with the biggest betweenness centrality.
 
 For the moment, the code only works for undirected and connected graphs.
 
 NOTE: To compile the code, you're going to need the discreture library: https://github.com/mraggi/discreture.
 
-#Quick preview
+# Quick preview
 
 ```c++
 #include<iostream>
@@ -78,11 +76,11 @@ vector<int> getMaximumVertices(int m=1)  //This function returns the m-vertices 
 ```
 
 
-#Contributors
+# Contributors
 
 This is joint work with Miguel Raggi
 
 
-#Acknowledgements
+# Acknowledgements
 
 This project was partially supported by PAPIIT project IA106316
